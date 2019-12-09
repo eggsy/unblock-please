@@ -36,3 +36,5 @@ You can use issues of this repository to request a feature! It's free, trust me.
 
 ## 💥 Extension Links
 _Coming soon..._
+
+If you're interested to help! See [Contributing](https://github.com/eggsywashere/imgur-please/blob/master/CONTRIBUTING.md) page!  
