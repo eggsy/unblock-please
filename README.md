@@ -7,12 +7,12 @@ It's 100% safe and it's open source! You can review the code from this repositor
 - Request logging, log how much time you saved by using our extension with request counts and last request date!
 - Simple switch to disable everything! Who knows, maybe DDG doesn't want you inside, so I made a switch for all of you to disable the extension's functions very easy!
 
-## Scrennshots
-[!image1](https://the-person-under-this-message.is-inside.me/2fygojEt.png)
-[!image2](https://the-person-under-this-message.is-inside.me/oWI3ZjAL.png)
+## Screenshots
+![image1](https://the-person-under-this-message.is-inside.me/2fygojEt.png "Extension isn't activated.")
+![image2](https://the-person-under-this-message.is-inside.me/oWI3ZjAL.png "Extension isn't activated.")
 
-[!image1-1](https://the-person-under-this-message.is-inside.me/ToeM7HzO.png)
-[!image2-1](https://the-person-under-this-message.is-inside.me/3RV2Uz8S.png)
+![image1-1](https://the-person-under-this-message.is-inside.me/ToeM7HzO.png "Extension is active!")
+![image2-1](https://the-person-under-this-message.is-inside.me/3RV2Uz8S.png "Extension is active!")
 
 ## Bugs
 Please report!
