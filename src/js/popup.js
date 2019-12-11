@@ -1,5 +1,4 @@
 document.addEventListener('DOMContentLoaded', function () {
-  console.log(localStorage.getItem("extActive"))
   const activated = localStorage.getItem("extActive") || "true";
 
   // Set the extActive to true so we don't have to mess with it everytime:
