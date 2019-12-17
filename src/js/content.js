@@ -1,7 +1,6 @@
 let loggedOnce = false,
     triesLeft = 10;
 
-updateImages();
 const interval = setInterval(updateImages, 1500);
 
 function updateImages() {
@@ -13,7 +12,10 @@ function updateImages() {
                 if (images) {
                     let count = 0;
 
-                    if (!loggedOnce) console.log("Imgur Please\nI'll be looking for imgur images for 15 seconds. Watch the magic!");
+                    if (!loggedOnce) {
+                        console.log("Imgur Please\nI'll be looking for imgur images for 15 seconds. Watch the magic!");
+                        loggedOnce = true;
+                    }
 
                     for (let i in images) {
                         if (images[i] && images[i].attributes && images[i].attributes.src && images[i].attributes.src.textContent.includes("imgur.com/") && !images[i].attributes.src.textContent.includes("proxy.duckduckgo.com")) {
@@ -24,7 +26,7 @@ function updateImages() {
 
                     if (count > 0) {
                         chrome.runtime.sendMessage({ method: "updateStats", add: count }, function (response) {
-                            if (!loggedOnce) console.log(response)
+                            console.log(response)
 
                             // Set logged once to true so it won't spam to your console!
                             loggedOnce = true;

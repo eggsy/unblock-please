@@ -20,6 +20,7 @@ It's 100% safe and it's open source! You can review the code from this repositor
 ## 💦 Features
 - Request logging, log how much time you saved by using our extension with request counts and last request date!
 - Simple switch to disable everything! Who knows, maybe DDG doesn't want you inside, so I made a switch for all of you to disable the extension's functions very easy!
+- Simple button to re-process the webpage any time you want, in case of errors or slow page loading!
 
 ## Screenshots
 ![image1](https://the-person-under-this-message.is-inside.me/PSRbeLlC.png "Extension isn't activated.")
@@ -37,4 +38,4 @@ You can use issues of this repository to request a feature! It's free, trust me.
 ## 💥 Extension Links
 _Coming soon..._
 
-If you're interested to help, check the [Contributing](https://github.com/eggsywashere/imgur-please/blob/master/CONTRIBUTING.md) page!  
+If you're interested to help, check the [Contributing](https://github.com/eggsywashere/imgur-please/blob/master/CONTRIBUTING.md) page!
