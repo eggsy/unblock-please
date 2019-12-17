@@ -4,6 +4,7 @@ Here I will write down the changelogs of updates, latest to oldest, I don't thin
 
 ### Version 1.0.5
 - Scan page button, now you can scan the page even if auto scanner stopped.
+- GitHub hotlink to the popup, now you can visit here any time you want!
 - Bug fixes, little typos, everytime.
 
 ### Version 1.0.1
