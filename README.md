@@ -36,6 +36,6 @@ Please report!
 You can use issues of this repository to request a feature! It's free, trust me. You can also make it by yourself and send a pull request! I can speak **Turkish** too!
 
 ## 💥 Extension Links
-_Coming soon..._
+[Chrome Webstore](https://chrome.google.com/webstore/detail/imgur-please/lpngbkmgnehdkkobdbieckjpphkohffd)
 
 If you're interested to help, check the [Contributing](https://github.com/eggsywashere/imgur-please/blob/master/CONTRIBUTING.md) page!
