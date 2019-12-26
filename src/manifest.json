@@ -12,7 +12,7 @@
     "default_icon": "icons/icon48.png",
     "default_popup": "popup.html"
   },
-  "permissions": ["tabs", "storage", "webRequest", "webRequestBlocking", "http://*/*", "https://*/*"],
+  "permissions": ["activeTab", "storage", "webRequest", "webRequestBlocking", "http://*/*", "https://*/*"],
   "background": {
     "scripts": ["js/background.js"]
   },
