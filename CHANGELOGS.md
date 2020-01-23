@@ -1,6 +1,8 @@
 ## Changelogs for updates
 Here I will write down the changelogs of updates, latest to oldest, I don't think there'll be a lot changes on this project after one point but it's still fun to have this! Also, don't get confused by the version numbers, they're just numbers, I just skip some of them because I do "BIG" changes some times.
 
+### Version 1.0.6
+- Changed the style of the switch (by ardasoyturk).
 
 ### Version 1.0.5
 - Scan page button, now you can scan the page even if auto scanner stopped.
