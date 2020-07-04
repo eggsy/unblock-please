@@ -25,15 +25,10 @@
           <v-icon>mdi-close</v-icon>
         </v-btn>
 
-        <v-card-title class="headline">
-          Updated!
-        </v-card-title>
+        <v-card-title class="headline">Updated!</v-card-title>
 
-        <v-card-subtitle
-          >You've upgraded to latest version! Enjoy!</v-card-subtitle
-        >
+        <v-card-subtitle>You've upgraded to latest version! Enjoy!</v-card-subtitle>
       </v-card>
-
       <v-card
         v-if="!read.projects"
         @click="redirect('https://eggsy.codes')"
@@ -45,10 +40,27 @@
           <v-icon>mdi-close</v-icon>
         </v-btn>
 
-        <v-card-text
-          >Hey! Would you mind checking my other projects? They're also really
-          cool!</v-card-text
-        >
+        <v-card-text>
+          Hey! Would you mind checking my other projects? They're also really
+          cool!
+        </v-card-text>
+      </v-card>
+
+      <v-card class="card" color="#2c3e50" dark>
+        <v-card-title class="headline">Total unblocks</v-card-title>
+
+        <v-card-subtitle>{{ stats.unblocks }}</v-card-subtitle>
+      </v-card>
+
+      <v-card class="card" color="#2980b9" dark>
+        <v-card-title class="headline">Latest unblock</v-card-title>
+
+        <v-card-subtitle>
+          {{ stats.latestUnblock
+          ? new Date(stats.latestUnblock).toLocaleString()
+          : "Never"
+          }}
+        </v-card-subtitle>
       </v-card>
 
       <v-row class="button-row" no-gutters>
@@ -57,21 +69,21 @@
         </v-col>
         <v-col>
           <v-btn icon small @click="redirect('webstore')">
-            <v-icon>mdi-star</v-icon></v-btn
-          >
+            <v-icon>mdi-star</v-icon>
+          </v-btn>
           <v-btn icon small @click="redirect('https://eggsy.codes')">
-            <v-icon>mdi-open-in-new</v-icon></v-btn
-          >
+            <v-icon>mdi-open-in-new</v-icon>
+          </v-btn>
         </v-col>
       </v-row>
     </div>
 
     <v-footer absolute>
       <v-row justify="space-between" class="footer-row">
-        <span class="status"
-          >Extension is
-          {{ options.extensionEnabled ? "enabled" : "disabled" }}.</span
-        >
+        <span class="status">
+          Extension is
+          {{ options.extensionEnabled ? "enabled" : "disabled" }}.
+        </span>
 
         <v-spacer></v-spacer>
 
@@ -81,8 +93,7 @@
           dark
           small
           @click="switchExtension()"
-          >{{ options.extensionEnabled ? "Disable" : "Enable" }}</v-btn
-        >
+        >{{ options.extensionEnabled ? "Disable" : "Enable" }}</v-btn>
       </v-row>
     </v-footer>
   </div>
@@ -186,6 +197,7 @@ export default {
       notification: false,
       read: { update: true, projects: true },
       options: { extensionEnabled: true },
+      stats: { latestUnblock: null, unblocks: 0 }
     };
   },
   mounted() {
@@ -201,13 +213,13 @@ export default {
         case "webstore":
           chrome.tabs.create({
             active: true,
-            url: `https://chrome.google.com/webstore/detail/${chrome.runtime.id}`,
+            url: `https://chrome.google.com/webstore/detail/${chrome.runtime.id}`
           });
           break;
         default:
           chrome.tabs.create({
             active: true,
-            url: url,
+            url: url
           });
           break;
       }
@@ -215,32 +227,38 @@ export default {
     async updateData() {
       let { options } = await get("options");
       let { read } = await get("read");
+      let { stats } = await get("stats");
 
-      this.options = options;
-      this.read = read;
+      if (options) this.options = options;
+      if (read) this.read = read;
+      if (stats) this.stats = stats;
+
       this.loaded = navigator.onLine;
     },
     async switchExtension() {
-      chrome.storage.sync.set({
-        options: { extensionEnabled: !this.options.extensionEnabled },
+      chrome.storage.local.set({
+        options: { extensionEnabled: !this.options.extensionEnabled }
+      });
+
+      chrome.browserAction.setBadgeText({
+        text: !this.options.extensionEnabled ? "" : "!"
       });
     },
     scan() {
-      let code = this.scanCode();
-
-      chrome.tabs.getSelected(null, (tab) => {
-        chrome.tabs.executeScript(tab.id, { code }, null);
+      chrome.tabs.getSelected(null, tab => {
+        chrome.tabs.executeScript(tab.id, { code: this.scanCode() }, null);
       });
     },
-    async close(type) {
+    close(type) {
       switch (type) {
         case "update":
           this.read["update"] = true;
-          chrome.storage.sync.set({ read: this.read });
+          chrome.storage.local.set({ read: this.read });
+          chrome.browserAction.setBadgeText({ text: "" });
           break;
         case "projects":
           this.read["projects"] = true;
-          chrome.storage.sync.set({ read: this.read });
+          chrome.storage.local.set({ read: this.read });
           break;
         default:
           break;
@@ -249,8 +267,8 @@ export default {
       return true;
     },
     scanCode() {
-      return `(()=>{for(let i in document.querySelectorAll("img")){let image=document.querySelectorAll("img")[i];if(image?.attributes?.src?.textContent.includes("i.imgur.com")&&new URL(image?.attributes?.src?.textContent).hostname=="i.imgur.com"){image.attributes.src.textContent="https://proxy.duckduckgo.com/iu/?u="+image.attributes.src.textContent}}chrome.storage.sync.set({stats:{latestUnblock:Date.now()}});triesLeft-=1})();`;
-    },
-  },
+      return `(()=>{let{stats}=await get("stats");for(let i in document.querySelectorAll("img")){let image=document.querySelectorAll("img")[i];if(image?.attributes?.src?.textContent.includes("i.imgur.com")&&new URL(image?.attributes?.src?.textContent).hostname=="i.imgur.com"){image.attributes.src.textContent="https://proxy.duckduckgo.com/iu/?u="+image.attributes.src.textContent}chrome.storage.local.set({stats:{unblocks: ++stats.unblocks,latestUnblock:Date.now()}})}triesLeft-=1})();`;
+    }
+  }
 };
 </script>

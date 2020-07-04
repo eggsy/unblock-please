@@ -7,6 +7,7 @@ const interval = setInterval(updateImages, 1500);
 async function updateImages() {
   if (triesLeft >= 0) {
     let { options } = await get("options");
+    let { stats } = await get("stats");
 
     if (options.extensionEnabled) {
       for (let i in document.querySelectorAll("img")) {
@@ -19,13 +20,16 @@ async function updateImages() {
           image.attributes.src.textContent =
             "https://proxy.duckduckgo.com/iu/?u=" +
             image.attributes.src.textContent;
+
+          chrome.storage.local.set({
+            stats: {
+              unblocks: ++stats.unblocks,
+              latestUnblock: Date.now(),
+            },
+          });
         }
       }
-      chrome.storage.sync.set({
-        stats: {
-          latestUnblock: Date.now()
-        }
-      });
+
       triesLeft--;
     }
   } else clearInterval(interval);

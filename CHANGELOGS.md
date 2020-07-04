@@ -2,11 +2,16 @@
 
 Here I will write down the changelogs of updates, latest to oldest, I don't think there'll be a lot changes on this project after one point but it's still fun to have this! Also, don't get confused by the version numbers, they're just numbers, I just skip some of them because I do "BIG" changes some times.
 
+### Version 2.5.0
+
+- Stats are back, you can now see how many times you got helped by the extension and when was the last time.
+- You will see a new `!` icon next to the extension's icon when you disable the extension.
+- Now using `chrome.storage.local` instead of `chrome.storage.sync` because we don't want to sync anymore.
+
 ### Version 2.0.0
 
 - Complete change. Everything's moved to Vue.
 - Removed statistics for the sake of my life. Seems like some Chrome listeners doesn't like async.
-  - Would really love to get them back if anyone's familiar with these stuff. You can always create a PR and send me your ideas.
 - Now using `chrome.storage.sync` instead of `localStorage`. They say it's much better.
 
 ### Version 1.0.6
