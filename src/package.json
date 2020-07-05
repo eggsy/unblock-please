@@ -1,6 +1,6 @@
 {
   "name": "imgur-please",
-  "version": "2.5.0",
+  "version": "2.5.1",
   "description": "Unblocks Imgur images access from documents and direct links with DuckDuckGo proxy.",
   "author": "EGGSY",
   "license": "MIT",

@@ -62,10 +62,6 @@ function install() {
     options: { extensionEnabled: true },
     stats: { unblocks: 0, latestUnblock: null },
   });
-
-  chrome.browserAction.setBadgeText({
-    text: "NEW",
-  });
 }
 
 async function update() {
