@@ -4,3 +4,4 @@ dist
 dist-zip
 .vscode
 node_modules
+scripts
