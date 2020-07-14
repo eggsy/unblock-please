@@ -1,8 +1,10 @@
-const { get } = require("./plugins/functions/storage");
+import { StorageValues } from "./functions/storage";
+const { get } = require("./functions/storage");
 
-let options = { extensionEnabled: true };
-let unblocks = 0;
+let options: { extensionEnabled: boolean } = { extensionEnabled: true };
+let unblocks: number = 0;
 
+// Intervals to update options and stats
 setInterval(() => {
   chrome.storage.local.get("options", updateData);
 }, 250);
@@ -11,6 +13,7 @@ setInterval(() => {
   chrome.storage.local.get("stats", updateData);
 }, 1000);
 
+// Blocked requests
 chrome.webRequest.onBeforeRequest.addListener(
   function(data) {
     if (!options.extensionEnabled) return;
@@ -28,6 +31,7 @@ chrome.webRequest.onBeforeRequest.addListener(
   ["blocking"]
 );
 
+// Extension on install/update
 chrome.runtime.onInstalled.addListener(async (details) => {
   switch (details.reason) {
     case "install":
@@ -40,21 +44,6 @@ chrome.runtime.onInstalled.addListener(async (details) => {
       break;
   }
 });
-
-function updateData(data) {
-  if (data.stats && unblocks > 0) {
-    chrome.storage.local.set({
-      stats: {
-        unblocks: data.stats.unblocks + unblocks,
-        latestUnblock: Date.now(),
-      },
-    });
-
-    unblocks = 0;
-  } else if (data.options) {
-    options = data.options;
-  }
-}
 
 function install() {
   chrome.storage.local.set({
@@ -93,5 +82,20 @@ async function update() {
   if (localStorage.getItem("latestUnblock")) {
     localStorage.removeItem("imgurUnblocks");
     localStorage.removeItem("latestUnblock");
+  }
+}
+
+function updateData(data: StorageValues) {
+  if (data.stats && unblocks > 0) {
+    chrome.storage.local.set({
+      stats: {
+        unblocks: data.stats.unblocks + unblocks,
+        latestUnblock: Date.now(),
+      },
+    });
+
+    unblocks = 0;
+  } else if (data.options) {
+    options = data.options;
   }
 }

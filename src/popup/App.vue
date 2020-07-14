@@ -1,150 +1,177 @@
 <template>
   <div>
-    <v-toolbar dense>
-      <v-toolbar-title class="title">Imgur Please</v-toolbar-title>
+    <header class="toolbar">
+      <div class="content">
+        <div class="title">Imgur Please</div>
+        <div class="spacer"></div>
+        <div
+          title="Visit GitHub page"
+          @click="redirect('https://github.com/eggsywashere/imgur-please')"
+        >
+          <GitHub class="icon" :style="{ width: '26px', height: '26px' }" />
+        </div>
+      </div>
+    </header>
 
-      <v-spacer></v-spacer>
+    <div class="overlay" v-if="!loaded"></div>
 
-      <v-btn
-        icon
-        @click="redirect('https://github.com/eggsywashere/imgur-please')"
-        v-tippy="{ content: 'Visit GitHub repository.' }"
-        small
-      >
-        <v-icon>mdi-github</v-icon>
-      </v-btn>
-    </v-toolbar>
+    <div class="body-content">
+      <div class="cards">
+        <div
+          title="Click to dismiss"
+          class="card clickable"
+          v-if="!read.update"
+          @click="close('update')"
+          :style="{ backgroundColor: '#27ae60' }"
+        >
+          <h1 class="title">Updated!</h1>
+          <p class="subtitle">You've upgraded to latest version! Enjoy!</p>
+        </div>
 
-    <div class="template">
-      <v-overlay :value="!loaded" absolute :opacity="0.9">
-        <v-progress-circular indeterminate size="64"></v-progress-circular>
-      </v-overlay>
+        <div
+          title="Click to dismiss"
+          class="card clickable"
+          v-if="!read.projects"
+          @click="redirect('https://eggsy.codes'); close('projects');"
+          :style="{ backgroundColor: '#16a085' }"
+        >
+          <p class="subtitle single">
+            Hey! Would you mind checking my other projects? They're also really
+            cool!
+          </p>
+        </div>
 
-      <v-card v-if="!read.update" class="card" color="#41b983" dark>
-        <v-btn class="close" @click="close('update')" icon x-small>
-          <v-icon>mdi-close</v-icon>
-        </v-btn>
+        <div class="card" :style="{ backgroundColor: 'rgb(44, 62, 80)' }">
+          <h1 class="title">Total unblocks</h1>
+          <p class="subtitle">{{ stats.unblocks }}</p>
+        </div>
 
-        <v-card-title class="headline">Updated!</v-card-title>
+        <div class="card" :style="{ backgroundColor: 'rgb(41, 128, 185)' }">
+          <h1 class="title">Latest unblock</h1>
+          <p class="subtitle">
+            {{ stats.latestUnblock
+            ? new Date(stats.latestUnblock).toLocaleString()
+            : "Never"
+            }}
+          </p>
+        </div>
+      </div>
 
-        <v-card-subtitle>You've upgraded to latest version! Enjoy!</v-card-subtitle>
-      </v-card>
-      <v-card
-        v-if="!read.projects"
-        @click="redirect('https://eggsy.codes')"
-        class="card"
-        color="#41b983"
-        dark
-      >
-        <v-btn class="close notitle" @click="close('projects')" icon x-small>
-          <v-icon>mdi-close</v-icon>
-        </v-btn>
-
-        <v-card-text>
-          Hey! Would you mind checking my other projects? They're also really
-          cool!
-        </v-card-text>
-      </v-card>
-
-      <v-card class="card" color="#2c3e50" dark>
-        <v-card-title class="headline">Total unblocks</v-card-title>
-
-        <v-card-subtitle>{{ stats.unblocks }}</v-card-subtitle>
-      </v-card>
-
-      <v-card class="card" color="#2980b9" dark>
-        <v-card-title class="headline">Latest unblock</v-card-title>
-
-        <v-card-subtitle>
-          {{ stats.latestUnblock
-          ? new Date(stats.latestUnblock).toLocaleString()
-          : "Never"
-          }}
-        </v-card-subtitle>
-      </v-card>
-
-      <v-row class="button-row" no-gutters>
-        <v-col>
-          <v-btn raised dark small @click="scan()">Scan Page</v-btn>
-        </v-col>
-        <v-col>
-          <v-btn icon small @click="redirect('webstore')">
-            <v-icon>mdi-star</v-icon>
-          </v-btn>
-          <v-btn icon small @click="redirect('https://eggsy.codes')">
-            <v-icon>mdi-open-in-new</v-icon>
-          </v-btn>
-        </v-col>
-      </v-row>
+      <button class="block button btn-black" @click="scan()">
+        <span>Scan Page</span>
+      </button>
     </div>
 
-    <v-footer absolute>
-      <v-row justify="space-between" class="footer-row">
-        <span class="status">
-          Extension is
-          {{ options.extensionEnabled ? "enabled" : "disabled" }}.
-        </span>
-
-        <v-spacer></v-spacer>
-
-        <v-btn
-          :color="options.extensionEnabled ? '#c0392b' : '#41b983'"
-          class="button"
-          dark
-          small
-          @click="switchExtension()"
-        >{{ options.extensionEnabled ? "Disable" : "Enable" }}</v-btn>
-      </v-row>
-    </v-footer>
+    <footer class="footer">
+      <div class="flex">
+        <span>Extension is {{ options.extensionEnabled ? "enabled" : "disabled" }}.</span>
+        <button
+          :class="`button btn-${options.extensionEnabled ? 'green' : 'red'}`"
+          @click="switchExtension"
+        >{{ options.extensionEnabled ? "Disable" : "Enable" }}</button>
+      </div>
+    </footer>
   </div>
 </template>
 
 <style lang="scss">
-@import "../public/css/root.scss";
-@import "../public/css/vuetify.min.css";
-
 body {
+  padding: 0;
+  margin: 0;
   width: 250px;
   max-height: 350px;
   max-width: 250px;
 
-  * {
-    user-select: none;
-    -webkit-user-select: none;
-    -moz-user-select: none;
+  .body-content {
+    padding: 0.25em 1em;
   }
 
-  :focus {
-    outline: 0;
-  }
+  .toolbar {
+    display: block;
+    flex: 1 1 auto;
+    max-width: 100%;
+    transition: transform 0.2s cubic-bezier(0.4, 0, 0.2, 1),
+      background-color 0.2s cubic-bezier(0.4, 0, 0.2, 1),
+      left 0.2s cubic-bezier(0.4, 0, 0.2, 1),
+      right 0.2s cubic-bezier(0.4, 0, 0.2, 1),
+      box-shadow 0.28s cubic-bezier(0.4, 0, 0.2, 1),
+      max-width 0.25s cubic-bezier(0.4, 0, 0.2, 1),
+      width 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+    box-shadow: 0 2px 4px -1px rgba(0, 0, 0, 0.2),
+      0 4px 5px 0 rgba(0, 0, 0, 0.14), 0 1px 10px 0 rgba(0, 0, 0, 0.12);
 
-  .v-input__slot {
-    margin-bottom: unset;
-  }
-
-  .title {
-    text-transform: uppercase;
-  }
-
-  .template {
-    padding: 1em;
-    overflow-y: auto;
-    margin-bottom: 2.5em;
-
-    .stat {
-      display: flex;
+    .title {
+      text-transform: uppercase;
+      font-size: 1.25rem;
+      line-height: 1.5;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+      -webkit-user-select: none;
+      -moz-user-select: none;
+      -ms-user-select: none;
+      user-select: none;
     }
 
+    .content,
+    .extension {
+      height: 38px;
+      align-items: center;
+      display: flex;
+      position: relative;
+      padding: 4px 16px;
+    }
+  }
+
+  .cards {
+    margin-top: 1em;
+
     .card {
-      margin-bottom: 1em;
+      display: block;
+      max-width: 100%;
+      overflow-wrap: break-word;
+      position: relative;
+      white-space: normal;
+      transition: box-shadow 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+      will-change: box-shadow;
+      color: #fff;
+      margin: 1em 0 1em 0;
+      border-radius: 4px;
+      box-shadow: 0 3px 1px -2px rgba(0, 0, 0, 0.2),
+        0 2px 2px 0 rgba(0, 0, 0, 0.14), 0 1px 5px 0 rgba(0, 0, 0, 0.12);
 
-      .close {
-        position: absolute;
-        right: 0;
-        margin: 2em 1em;
+      .title {
+        padding: 16px 16px 0 16px;
+        align-items: center;
+        display: flex;
+        flex-wrap: wrap;
+        font-size: 1.25rem;
+        font-weight: 500;
+        letter-spacing: 0.0125em;
+        line-height: 2rem;
+        word-break: break-all;
+        margin-bottom: 0;
+        -webkit-user-select: none;
+        -moz-user-select: none;
+        -ms-user-select: none;
+        user-select: none;
+      }
 
-        &.notitle {
-          margin: 1em 1em;
+      .subtitle {
+        color: hsla(0, 0%, 100%, 0.7);
+        padding: 1em;
+        font-size: 0.875rem;
+        font-weight: 400;
+        line-height: 1.375rem;
+        letter-spacing: 0.007em;
+        -webkit-user-select: none;
+        -moz-user-select: none;
+        -ms-user-select: none;
+        user-select: none;
+        margin-top: -1em;
+
+        &.single {
+          margin-top: 1em;
         }
       }
 
@@ -153,43 +180,116 @@ body {
           0 4px 4px 0 rgba(0, 0, 0, 0.14), 0 3px 7px 0 rgba(0, 0, 0, 0.12);
       }
     }
-
-    .button-row {
-      margin-bottom: 1em;
-      text-align: center;
-    }
   }
 
-  .footer-row {
+  .footer {
+    margin-top: 1em;
+    background-color: #f5f5f5;
+    color: rgba(0, 0, 0, 0.87);
+    height: 3em;
     padding: 0 1em;
 
-    .status {
-      place-self: center;
+    * {
+      align-self: center;
+      -webkit-user-select: none;
+      -moz-user-select: none;
+      -ms-user-select: none;
+      user-select: none;
     }
 
     .button {
-      width: 6em;
+      width: 6.5em;
     }
   }
-}
 
-::-webkit-scrollbar {
-  width: 0.7em;
-}
-::-webkit-scrollbar-track {
-  box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
-}
+  .button {
+    align-items: center;
+    border-radius: 4px;
+    flex: 0 0 auto;
+    font-weight: 500;
+    justify-content: center;
+    outline: 0;
+    position: relative;
+    text-transform: uppercase;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+    font-size: 0.75rem;
+    color: #fff;
+    padding: 0.25em 0.75em;
+    height: 28px;
+    min-width: 50px;
+    border: 0;
+    cursor: pointer;
+    transition: opacity 0.2s, box-shadow 0.2s;
 
-::-webkit-scrollbar-thumb {
-  background-color: darkgrey;
-  outline: 1px solid slategrey;
+    &:hover {
+      opacity: 0.95;
+      box-shadow: 0 3px 1px -2px rgba(0, 0, 0, 0.2),
+        0 2px 2px 0 rgba(0, 0, 0, 0.14), 0 1px 5px 0 rgba(0, 0, 0, 0.12);
+    }
+
+    span {
+      align-items: center;
+      color: inherit;
+      display: flex;
+      flex: 1 0 auto;
+      justify-content: inherit;
+      line-height: normal;
+      position: relative;
+    }
+  }
+
+  .btn-black {
+    background-color: #272727;
+  }
+
+  .btn-green {
+    background-color: #27ae60;
+  }
+
+  .btn-red {
+    background-color: #c0392b;
+  }
+
+  .icon {
+    cursor: pointer;
+    transition: opacity 0.2s;
+
+    &:hover {
+      opacity: 0.75;
+    }
+  }
+
+  .block {
+    width: 100%;
+  }
+
+  .spacer {
+    flex-grow: 1 !important;
+  }
+
+  .flex {
+    display: flex;
+    justify-content: space-between;
+    height: 100%;
+  }
+
+  .clickable {
+    cursor: pointer;
+  }
 }
 </style>
 
 <script>
-import { get } from "../plugins/functions/storage";
+import GitHub from "../components/github";
+import { get } from "../functions/storage";
 
 export default {
+  components: {
+    GitHub
+  },
   data() {
     // Setting defaults so it doesn't look floppy while popup is generating.
     return {

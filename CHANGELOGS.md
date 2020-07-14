@@ -2,6 +2,12 @@
 
 Here I will write down the changelogs of updates, latest to oldest, I don't think there'll be a lot changes on this project after one point but it's still fun to have this! Also, don't get confused by the version numbers, they're just numbers, I just skip some of them because I do "BIG" changes some times.
 
+### Version 2.6.0
+
+- Moved everything to TypeScript as it'd help you to contribute easier.
+- Removed MDI (material design icons) and Vuetify compeletely (I was lazy to do this before). Exension size is almost 2 times lower than the of the old versions. No more console warnings about package being too big!
+  - Note: I've tried to keep everything look the same but it might look a bit uglier than the older version but believe me, it's better this way.
+
 ### Version 2.5.0
 
 - Stats are back, you can now see how many times you got helped by the extension and when was the last time.

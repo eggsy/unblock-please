@@ -1,4 +1,4 @@
-import { get } from "./plugins/functions/storage";
+import { get } from "./functions/storage";
 let triesLeft = 10;
 
 updateImages();
@@ -11,15 +11,13 @@ async function updateImages() {
 
     if (options.extensionEnabled) {
       for (let i in document.querySelectorAll("img")) {
-        let image = document.querySelectorAll("img")[i];
+        let image: HTMLImageElement = document.querySelectorAll("img")[i];
 
         if (
-          image?.attributes?.src?.textContent.includes("i.imgur.com") &&
-          new URL(image?.attributes?.src?.textContent).hostname == "i.imgur.com"
+          image?.src?.includes("i.imgur.com") &&
+          new URL(image?.src).hostname == "i.imgur.com"
         ) {
-          image.attributes.src.textContent =
-            "https://proxy.duckduckgo.com/iu/?u=" +
-            image.attributes.src.textContent;
+          image.src = "https://proxy.duckduckgo.com/iu/?u=" + image.src;
 
           chrome.storage.local.set({
             stats: {

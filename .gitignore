@@ -1,5 +1,6 @@
-/src/node_modules
+node_modules
 /*.log
-/src/dist
-/src/dist-zip
-.vscode/settings.json
+dist
+dist-zip
+.vscode
+node_modules

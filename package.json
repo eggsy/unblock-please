@@ -1,6 +1,6 @@
 {
   "name": "imgur-please",
-  "version": "2.5.1",
+  "version": "2.6.0",
   "description": "Unblocks Imgur images access from documents and direct links with DuckDuckGo proxy.",
   "author": "EGGSY",
   "license": "MIT",
@@ -17,11 +17,8 @@
     "watch:dev": "cross-env HMR=true npm run build:dev -- --watch"
   },
   "dependencies": {
-    "@mdi/font": "^5.3.45",
     "ejs": "^3.1.3",
-    "vue": "^2.6.11",
-    "vue-tippy": "^4.4.0",
-    "vuetify": "^2.3.3"
+    "vue": "^2.6.11"
   },
   "devDependencies": {
     "@babel/core": "^7.10.4",
@@ -42,6 +39,8 @@
     "node-sass": "^4.14.1",
     "sass": "^1.26.9",
     "sass-loader": "^9.0.1",
+    "ts-loader": "^8.0.0",
+    "typescript": "^3.9.6",
     "vue-loader": "^15.9.3",
     "vue-template-compiler": "^2.6.11",
     "webpack": "^4.43.0",

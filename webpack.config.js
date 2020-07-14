@@ -8,11 +8,11 @@ const { version } = require("./package.json");
 
 const config = {
   mode: process.env.NODE_ENV,
-  context: __dirname + "/",
+  context: __dirname + "/src/",
   entry: {
-    background: "./background.js",
-    content: "./content.js",
-    "popup/popup": "./popup/popup.js",
+    background: "./background",
+    content: "./content",
+    "popup/popup": "./popup/popup",
   },
   output: {
     path: __dirname + "/dist",
@@ -20,10 +20,11 @@ const config = {
     filename: "[name].js",
   },
   resolve: {
-    extensions: [".js", ".vue"],
+    extensions: [".ts", ".tsx", ".js", ".vue"],
   },
   module: {
     rules: [
+      { test: /\.tsx?$/, loader: "ts-loader" },
       {
         test: /\.vue$/,
         loaders: "vue-loader",
@@ -85,7 +86,6 @@ const config = {
     new CopyPlugin({
       patterns: [
         { from: "icons", to: "icons" },
-        { from: "public", to: "public" },
         {
           from: "popup/popup.html",
           to: "popup/popup.html",
@@ -124,7 +124,7 @@ if (config.mode === "production") {
 if (process.env.HMR === "true") {
   config.plugins = (config.plugins || []).concat([
     new ExtensionReloader({
-      manifest: __dirname + "/manifest.json",
+      manifest: __dirname + "/src/manifest.json",
     }),
   ]);
 }
