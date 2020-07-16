@@ -1,5 +1,4 @@
-import { StorageValues } from "./functions/storage";
-const { get } = require("./functions/storage");
+import { StorageValues, get } from "./functions/storage";
 
 let options: { extensionEnabled: boolean } = { extensionEnabled: true };
 let unblocks: number = 0;
@@ -63,8 +62,8 @@ async function update() {
     read: { update: false, projects: (await get("read")).read.projects },
   });
 
-  let oldWay = localStorage.getItem("extActive");
-  let newWay = await get("options");
+  const oldWay = localStorage.getItem("extActive");
+  const newWay = await get("options");
 
   if (oldWay) {
     chrome.storage.local.set({

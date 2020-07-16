@@ -2,7 +2,7 @@
   "manifest_version": 2,
   "name": "Imgur Please",
   "description": "Unblocks Imgur images access from documents and direct links with DuckDuckGo proxy.",
-  "version": "2.6.0",
+  "version": "2.6.1",
   "icons": {
     "16": "icons/icon16.png",
     "48": "icons/icon48.png",
