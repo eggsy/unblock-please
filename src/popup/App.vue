@@ -32,7 +32,7 @@
           title="Click to dismiss"
           class="card clickable"
           v-if="!read.projects"
-          @click="redirect('https://eggsy.codes'); close('projects');"
+          @click="redirect('https://eggsy.xyz'); close('projects');"
           :style="{ backgroundColor: '#16a085' }"
         >
           <p class="subtitle single">
