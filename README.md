@@ -20,9 +20,8 @@ It's 100% safe and it's open source! You can review the code from this repositor
 
 ## 💦 Features
 
-- Simple switch to disable everything! Who knows, maybe DDG doesn't want you inside, so I made a switch for all of you to disable the extension's functions very easy!
+- Simple switch to disable everything! Who knows, maybe DDG doesn't want you inside, so we made a switch for all of you to disable the extension's functions very easy!
 - See your stats, total unblocked images and last time Imgur Please helped you to unblock a request!
-- Simple button to re-process the webpage any time you want, in case of errors or slow page loading!
 
 ## Screenshots
 
