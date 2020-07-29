@@ -1,30 +1,32 @@
 const webpack = require("webpack");
 const ejs = require("ejs");
-const MiniCssExtractPlugin = require("mini-css-extract-plugin");
 const CopyPlugin = require("copy-webpack-plugin");
 const ExtensionReloader = require("webpack-extension-reloader");
+
 const { VueLoaderPlugin } = require("vue-loader");
 const { version } = require("./package.json");
+const { resolve } = require("path");
 
 const config = {
   mode: process.env.NODE_ENV,
   context: __dirname + "/src/",
   entry: {
     background: "./background",
-    content: "./content",
     "popup/popup": "./popup/popup",
   },
   output: {
     path: __dirname + "/dist",
-    publicPath: "/public/",
     filename: "[name].js",
   },
   resolve: {
-    extensions: [".ts", ".tsx", ".js", ".vue"],
+    extensions: [".ts", ".js", ".vue"],
   },
   module: {
     rules: [
-      { test: /\.tsx?$/, loader: "ts-loader" },
+      {
+        test: /\.tsx?$/,
+        loader: "ts-loader",
+      },
       {
         test: /\.vue$/,
         loaders: "vue-loader",
@@ -35,13 +37,14 @@ const config = {
         exclude: /node_modules/,
       },
       {
-        test: /\.css$/,
-        use: [MiniCssExtractPlugin.loader, "css-loader"],
+        test: /\.svg$/,
+        loader: "svg-url-loader",
       },
       {
         test: /\.s(c|a)ss$/,
         use: [
           "vue-style-loader",
+          "style-loader",
           "css-loader",
           {
             loader: "sass-loader",
@@ -55,24 +58,6 @@ const config = {
           },
         ],
       },
-      {
-        test: /\.(png|jpg|jpeg|gif|svg|ico)$/,
-        loader: "file-loader",
-        options: {
-          name: "[name].[ext]",
-          outputPath: "/images/",
-          emitFile: false,
-        },
-      },
-      {
-        test: /\.(woff(2)?|ttf|eot|svg)(\?v=\d+\.\d+\.\d+)?$/,
-        loader: "file-loader",
-        options: {
-          name: "[name].[ext]",
-          outputPath: "/fonts/",
-          emitFile: false,
-        },
-      },
     ],
   },
   plugins: [
@@ -80,12 +65,9 @@ const config = {
       global: "window",
     }),
     new VueLoaderPlugin(),
-    new MiniCssExtractPlugin({
-      filename: "[name].css",
-    }),
     new CopyPlugin({
       patterns: [
-        { from: "icons", to: "icons" },
+        { from: "assets", to: "assets" },
         {
           from: "popup/popup.html",
           to: "popup/popup.html",
@@ -124,7 +106,7 @@ if (config.mode === "production") {
 if (process.env.HMR === "true") {
   config.plugins = (config.plugins || []).concat([
     new ExtensionReloader({
-      manifest: __dirname + "/src/manifest.json",
+      manifest: resolve("./src/manifest.json"),
     }),
   ]);
 }

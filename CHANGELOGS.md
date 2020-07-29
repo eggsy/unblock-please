@@ -2,6 +2,12 @@
 
 Here I will write down the changelogs of updates, latest to oldest, I don't think there'll be a lot changes on this project after one point but it's still fun to have this! Also, don't get confused by the version numbers, they're just numbers, I just skip some of them because I do "BIG" changes some times.
 
+### Version 2.6.5
+
+- Removed content script, turns out it wasn't necessary.
+  - This means I have also removed the "Scan Page" button; it shouldn't be a problem on any website even if it loads images after the page is loaded, request is still sent and our background script will take care of it.
+- Code cleanup; cleaned the code like _a lot_.
+
 ### Version 2.6.0
 
 - Moved everything to TypeScript as it'd help you to contribute easier.

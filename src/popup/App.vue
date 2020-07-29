@@ -4,12 +4,17 @@
       <div class="content">
         <div class="title">Imgur Please</div>
         <div class="spacer"></div>
-        <div
+        <a
           title="Visit GitHub page"
-          @click="redirect('https://github.com/eggsywashere/imgur-please')"
+          href="https://github.com/eggsywashere/imgur-please"
+          target="_blank"
         >
-          <GitHub class="icon" :style="{ width: '26px', height: '26px' }" />
-        </div>
+          <img
+            class="icon"
+            :src="require('../assets/icons/github.svg')"
+            :style="{ width: '26px', height: '26px' }"
+          />
+        </a>
       </div>
     </header>
 
@@ -56,10 +61,6 @@
           </p>
         </div>
       </div>
-
-      <button class="block button btn-black" @click="scan()">
-        <span>Scan Page</span>
-      </button>
     </div>
 
     <footer class="footer">
@@ -78,6 +79,7 @@
 body {
   padding: 0;
   margin: 0;
+  font-family: "lexend Deca", "Segoe UI", sans-serif;
   width: 250px;
   max-height: 350px;
   max-width: 250px;
@@ -101,6 +103,7 @@ body {
       0 4px 5px 0 rgba(0, 0, 0, 0.14), 0 1px 10px 0 rgba(0, 0, 0, 0.12);
 
     .title {
+      font-family: "Segoe UI", sans-serif;
       text-transform: uppercase;
       font-size: 1.25rem;
       line-height: 1.5;
@@ -183,7 +186,6 @@ body {
   }
 
   .footer {
-    margin-top: 1em;
     background-color: #f5f5f5;
     color: rgba(0, 0, 0, 0.87);
     height: 3em;
@@ -283,13 +285,9 @@ body {
 </style>
 
 <script>
-import GitHub from "../components/github";
 import { get } from "../functions/storage";
 
 export default {
-  components: {
-    GitHub
-  },
   data() {
     // Setting defaults so it doesn't look floppy while popup is generating.
     return {
@@ -297,10 +295,10 @@ export default {
       notification: false,
       read: { update: true, projects: true },
       options: { extensionEnabled: true },
-      stats: { latestUnblock: null, unblocks: 0 }
+      stats: { latestUnblock: null, unblocks: 0 },
     };
   },
-  mounted() {
+  async mounted() {
     this.updateData();
     this.interval = setInterval(() => this.updateData(), 150);
   },
@@ -309,20 +307,10 @@ export default {
   },
   methods: {
     redirect(url) {
-      switch (url) {
-        case "webstore":
-          chrome.tabs.create({
-            active: true,
-            url: `https://chrome.google.com/webstore/detail/${chrome.runtime.id}`
-          });
-          break;
-        default:
-          chrome.tabs.create({
-            active: true,
-            url: url
-          });
-          break;
-      }
+      chrome.tabs.create({
+        active: true,
+        url: url,
+      });
     },
     async updateData() {
       let { options } = await get("options");
@@ -337,16 +325,11 @@ export default {
     },
     async switchExtension() {
       chrome.storage.local.set({
-        options: { extensionEnabled: !this.options.extensionEnabled }
+        options: { extensionEnabled: !this.options.extensionEnabled },
       });
 
       chrome.browserAction.setBadgeText({
-        text: !this.options.extensionEnabled ? "" : "!"
-      });
-    },
-    scan() {
-      chrome.tabs.getSelected(null, tab => {
-        chrome.tabs.executeScript(tab.id, { code: this.scanCode() }, null);
+        text: !this.options.extensionEnabled ? "" : "!",
       });
     },
     close(type) {
@@ -363,12 +346,7 @@ export default {
         default:
           break;
       }
-
-      return true;
     },
-    scanCode() {
-      return `(()=>{let{stats}=await get("stats");for(let i in document.querySelectorAll("img")){let image=document.querySelectorAll("img")[i];if(image?.attributes?.src?.textContent.includes("i.imgur.com")&&new URL(image?.attributes?.src?.textContent).hostname=="i.imgur.com"){image.attributes.src.textContent="https://proxy.duckduckgo.com/iu/?u="+image.attributes.src.textContent}chrome.storage.local.set({stats:{unblocks: ++stats.unblocks,latestUnblock:Date.now()}})}triesLeft-=1})();`;
-    }
-  }
+  },
 };
 </script>
