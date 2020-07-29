@@ -7,6 +7,7 @@ Here I will write down the changelogs of updates, latest to oldest, I don't thin
 - Removed content script, turns out it wasn't necessary.
   - This means I have also removed the "Scan Page" button; it shouldn't be a problem on any website even if it loads images after the page is loaded, request is still sent and our background script will take care of it.
 - Code cleanup; cleaned the code like _a lot_.
+- Changed font, I like this one more.
 
 ### Version 2.6.0
 

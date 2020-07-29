@@ -298,9 +298,9 @@ export default {
       stats: { latestUnblock: null, unblocks: 0 },
     };
   },
-  async mounted() {
+  mounted() {
     this.updateData();
-    this.interval = setInterval(() => this.updateData(), 150);
+    this.interval = setInterval(this.updateData, 150);
   },
   beforeDestroy() {
     clearInterval(this.interval);
