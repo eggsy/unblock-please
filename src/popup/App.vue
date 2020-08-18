@@ -6,7 +6,7 @@
         <div class="spacer"></div>
         <a
           title="Visit GitHub page"
-          href="https://github.com/eggsywashere/imgur-please"
+          href="https://github.com/eggsydev/imgur-please"
           target="_blank"
         >
           <img
