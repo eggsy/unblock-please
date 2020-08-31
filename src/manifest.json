@@ -1,8 +1,8 @@
 {
   "manifest_version": 2,
-  "name": "Imgur Please",
-  "description": "Unblocks Imgur images access from documents and direct links with DuckDuckGo proxy.",
-  "version": "2.6.5",
+  "name": "Unblock Please",
+  "description": "Unblocks Imgur image and Pastebin paste access from documents and direct links with different proxies.",
+  "version": "3.0.0",
   "icons": {
     "16": "assets/icons/system/icon16.png",
     "48": "assets/icons/system/icon48.png",

@@ -2,11 +2,11 @@
   <div>
     <header class="toolbar">
       <div class="content">
-        <div class="title">Imgur Please</div>
+        <div class="title">Unblock Please</div>
         <div class="spacer"></div>
         <a
           title="Visit GitHub page"
-          href="https://github.com/eggsydev/imgur-please"
+          href="https://github.com/eggsydev/unblock-please"
           target="_blank"
         >
           <img
@@ -64,12 +64,12 @@
     </div>
 
     <footer class="footer">
-      <div class="flex">
-        <span>Extension is {{ options.extensionEnabled ? "enabled" : "disabled" }}.</span>
-        <button
-          :class="`button btn-${options.extensionEnabled ? 'green' : 'red'}`"
-          @click="switchExtension"
-        >{{ options.extensionEnabled ? "Disable" : "Enable" }}</button>
+      <div class="control" @click="disableUnblock('imgur')">
+        <button :class="{ button: true, active: options.unblock.imgur}">Imgur</button>
+      </div>
+
+      <div class="control" @click="disableUnblock('pastebin')">
+        <button :class="{ button: true, active: options.unblock.pastebin}">Pastebin</button>
       </div>
     </footer>
   </div>
@@ -92,13 +92,6 @@ body {
     display: block;
     flex: 1 1 auto;
     max-width: 100%;
-    transition: transform 0.2s cubic-bezier(0.4, 0, 0.2, 1),
-      background-color 0.2s cubic-bezier(0.4, 0, 0.2, 1),
-      left 0.2s cubic-bezier(0.4, 0, 0.2, 1),
-      right 0.2s cubic-bezier(0.4, 0, 0.2, 1),
-      box-shadow 0.28s cubic-bezier(0.4, 0, 0.2, 1),
-      max-width 0.25s cubic-bezier(0.4, 0, 0.2, 1),
-      width 0.25s cubic-bezier(0.4, 0, 0.2, 1);
     box-shadow: 0 2px 4px -1px rgba(0, 0, 0, 0.2),
       0 4px 5px 0 rgba(0, 0, 0, 0.14), 0 1px 10px 0 rgba(0, 0, 0, 0.12);
 
@@ -186,21 +179,28 @@ body {
   }
 
   .footer {
-    background-color: #f5f5f5;
-    color: rgba(0, 0, 0, 0.87);
     height: 3em;
-    padding: 0 1em;
+    background-color: #000000;
+    display: flex;
+    justify-content: space-between;
+    border-top: solid 2px #f5f5f5;
 
-    * {
-      align-self: center;
-      -webkit-user-select: none;
-      -moz-user-select: none;
-      -ms-user-select: none;
-      user-select: none;
-    }
+    .control {
+      width: 100%;
+      color: #ffffff;
+      text-align: center;
 
-    .button {
-      width: 6.5em;
+      .button {
+        height: 100%;
+        width: 100%;
+        border-radius: 0;
+        background-color: #c0392b;
+        transition: background-color 0.2s, opacity 0.2s;
+
+        &.active {
+          background-color: #27ae60;
+        }
+      }
     }
   }
 
@@ -294,11 +294,20 @@ export default {
       loaded: false,
       notification: false,
       read: { update: true, projects: true },
-      options: { extensionEnabled: true },
+      options: {
+        unblock: {
+          imgur: true,
+          pastebin: true,
+        },
+      },
       stats: { latestUnblock: null, unblocks: 0 },
     };
   },
   mounted() {
+    this.options.unblock = localStorage.getItem("unblocks")
+      ? JSON.parse(localStorage.getItem("unblocks"))
+      : this.options;
+
     this.updateData();
     this.interval = setInterval(this.updateData, 150);
   },
@@ -313,24 +322,36 @@ export default {
       });
     },
     async updateData() {
-      let { options } = await get("options");
       let { read } = await get("read");
       let { stats } = await get("stats");
 
-      if (options) this.options = options;
       if (read) this.read = read;
       if (stats) this.stats = stats;
 
-      this.loaded = navigator.onLine;
-    },
-    async switchExtension() {
       chrome.storage.local.set({
-        options: { extensionEnabled: !this.options.extensionEnabled },
+        options: {
+          unblock: { ...this.options.unblock },
+        },
       });
 
-      chrome.browserAction.setBadgeText({
-        text: !this.options.extensionEnabled ? "" : "!",
-      });
+      this.loaded = navigator.onLine;
+    },
+    async disableUnblock(platform) {
+      this.options.unblock[platform] = !this.options.unblock[platform];
+
+      localStorage.setItem(
+        "unblocks",
+        JSON.stringify({ ...this.options.unblock })
+      );
+
+      if (!this.options.unblock.imgur && !this.options.unblock.pastebin)
+        chrome.browserAction.setBadgeText({
+          text: "!",
+        });
+      else
+        chrome.browserAction.setBadgeText({
+          text: "",
+        });
     },
     close(type) {
       switch (type) {

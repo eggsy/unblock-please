@@ -14,14 +14,14 @@
 
 ## ℹ️ About
 
-Imgur Please is an extension that you can use a way to bypass the blocks caused by your ISP, country or unsecure connection by using DuckDuckGo proxies!
+Unblock Please is an extension that you can use to bypass Pastebin and Imgur blockages put by your ISP, country or unsecure connection by using different proxies!
 
 It's 100% safe and it's open source! You can review the code from this repository and you customize it as much as you want! You can also use this project's system to unblock other websites blocked for you for some reasons. Check our [changelogs](https://github.com/eggsydev/imgur-please/blob/master/CHANGELOGS.md) to see what's new!
 
 ## 💦 Features
 
-- Simple switch to disable everything! Who knows, maybe DDG doesn't want you inside, so we made a switch for all of you to disable the extension's functions very easy!
-- See your stats, total unblocked images and last time Imgur Please helped you to unblock a request!
+- Simple switch to disable which sites you don't want extension to work on.
+- See your stats, total unblocked images and last time Unblock Please helped you to unblock a request!
 
 ## Screenshots
 

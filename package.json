@@ -1,8 +1,12 @@
 {
-  "name": "imgur-please",
-  "version": "2.6.5",
-  "description": "Unblocks Imgur images access from documents and direct links with DuckDuckGo proxy.",
-  "author": "EGGSY",
+  "name": "unblock-please",
+  "version": "3.0.0",
+  "description": "Unblocks Imgur image and Pastebin paste access from documents and direct links with different proxies.",
+  "author": {
+    "email": "eggsydev@gmail.com",
+    "name": "Abdulbaki Dursun <EGGSY>",
+    "url": "https://eggsy.xyz"
+  },
   "license": "MIT",
   "engines": {
     "node": ">=10"
@@ -14,34 +18,34 @@
     "dev": "cross-env HMR=true npm run build:dev -- --watch"
   },
   "dependencies": {
-    "ejs": "^3.1.3",
-    "vue": "^2.6.11"
+    "ejs": "^3.1.5",
+    "vue": "^2.6.12"
   },
   "devDependencies": {
-    "@babel/core": "^7.10.5",
-    "@babel/plugin-proposal-optional-chaining": "^7.10.4",
-    "@babel/preset-env": "^7.10.4",
-    "@babel/runtime-corejs3": "^7.10.5",
+    "@babel/core": "^7.11.5",
+    "@babel/plugin-proposal-optional-chaining": "^7.11.0",
+    "@babel/preset-env": "^7.11.5",
+    "@babel/runtime-corejs3": "^7.11.2",
     "@types/chrome": "^0.0.122",
     "archiver": "^5.0.0",
     "babel-loader": "^8.1.0",
-    "copy-webpack-plugin": "^6.0.3",
+    "copy-webpack-plugin": "^6.1.0",
     "core-js": "^3.6.5",
     "cross-env": "^7.0.2",
-    "css-loader": "^4.0.0",
+    "css-loader": "^4.2.2",
     "deepmerge": "^4.2.2",
     "fibers": "^5.0.0",
-    "file-loader": "^6.0.0",
+    "file-loader": "^6.1.0",
     "node-sass": "^4.14.1",
     "sass": "^1.26.10",
-    "sass-loader": "^9.0.2",
+    "sass-loader": "^10.0.1",
     "style-loader": "^1.2.1",
     "svg-url-loader": "^6.0.0",
-    "ts-loader": "^8.0.1",
-    "typescript": "^3.9.7",
+    "ts-loader": "^8.0.3",
+    "typescript": "^4.0.2",
     "vue-loader": "^15.9.3",
-    "vue-template-compiler": "^2.6.11",
-    "webpack": "^4.44.0",
+    "vue-template-compiler": "^2.6.12",
+    "webpack": "^4.44.1",
     "webpack-cli": "^3.3.12",
     "webpack-extension-reloader": "^1.1.4"
   }
