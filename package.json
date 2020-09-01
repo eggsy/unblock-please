@@ -1,7 +1,7 @@
 {
   "name": "unblock-please",
-  "version": "3.0.0",
-  "description": "Unblocks Imgur image and Pastebin paste access from documents and direct links with different proxies.",
+  "version": "3.0.1",
+  "description": "Unblocks blocked Imgur image and Pastebin paste access requests by using different proxies.",
   "author": {
     "email": "eggsydev@gmail.com",
     "name": "Abdulbaki Dursun <EGGSY>",

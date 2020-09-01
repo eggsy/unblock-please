@@ -306,7 +306,7 @@ export default {
   mounted() {
     this.options.unblock = localStorage.getItem("unblocks")
       ? JSON.parse(localStorage.getItem("unblocks"))
-      : this.options;
+      : this.options.unblock;
 
     this.updateData();
     this.interval = setInterval(this.updateData, 150);
