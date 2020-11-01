@@ -6,7 +6,7 @@
         <div class="spacer"></div>
         <a
           title="Visit GitHub page"
-          href="https://github.com/eggsydev/unblock-please"
+          href="https://github.com/eggsy/unblock-please"
           target="_blank"
         >
           <img
