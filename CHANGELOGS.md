@@ -2,6 +2,12 @@
 
 Here I will write down the changelogs of updates, latest to oldest, I don't think there'll be a lot changes on this project after one point but it's still fun to have this! Also, don't get confused by the version numbers, they're just numbers, I just skip some of them because I do "BIG" changes some times.
 
+### Version 3.1.0
+
+- Removed unnecessary `tabs` permission.
+- Added shadow to all 3 icons so white mode users could see it clearer.
+- Updated Vue and modules.
+
 ### Version 3.0.0
 
 - Now supports Pastebin! Using [pastebinp](https://pastebinp.com/) proxy to unblock access to it, this change also applies to the name. Since we are not only unblocking Imgur image access now, we renamed our extension to "Unblock Please".
