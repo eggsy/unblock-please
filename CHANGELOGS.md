@@ -2,6 +2,11 @@
 
 Here I will write down the changelogs of updates, latest to oldest, I don't think there'll be a lot changes on this project after one point but it's still fun to have this! Also, don't get confused by the version numbers, they're just numbers, I just skip some of them because I do "BIG" changes some times.
 
+### Version 3.5.0
+
+- Moved to TailwindCSS and removed all _pure/handwritten_ CSS which saves us from mess Vue files.
+- Modules updated to their latest versions.
+
 ### Version 3.1.0
 
 - Removed unnecessary `tabs` permission.

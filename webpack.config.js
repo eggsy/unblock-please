@@ -19,7 +19,7 @@ const config = {
     filename: "[name].js",
   },
   resolve: {
-    extensions: [".ts", ".js", ".vue"],
+    extensions: [".ts", ".js", ".vue", ".css"],
   },
   module: {
     rules: [
@@ -46,6 +46,7 @@ const config = {
           "vue-style-loader",
           "style-loader",
           "css-loader",
+          "postcss-loader",
           {
             loader: "sass-loader",
             options: {
@@ -58,6 +59,7 @@ const config = {
           },
         ],
       },
+
     ],
   },
   plugins: [

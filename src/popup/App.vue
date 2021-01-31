@@ -1,288 +1,129 @@
 <template>
-  <div>
-    <header class="toolbar">
-      <div class="content">
-        <div class="title">Unblock Please</div>
-        <div class="spacer"></div>
+  <div class="w-64">
+    <header
+      class="px-4 py-2 bg-gray-200 border-b-2 border-gray-800 border-opacity-5"
+    >
+      <div class="flex items-center justify-between">
+        <div class="text-lg font-medium">Unblock Please</div>
         <a
           title="Visit GitHub page"
+          class="p-1 text-white bg-gray-300 rounded-full hover:shadow-lg"
           href="https://github.com/eggsy/unblock-please"
           target="_blank"
         >
           <img
-            class="icon"
+            class="w-6 h-6 text-white"
             :src="require('../assets/icons/github.svg')"
-            :style="{ width: '26px', height: '26px' }"
           />
         </a>
       </div>
     </header>
 
-    <div class="overlay" v-if="!loaded"></div>
+    <div
+      v-if="!loaded"
+      class="fixed top-0 bottom-0 left-0 right-0 flex items-center justify-center bg-black bg-opacity-75"
+    >
+      <h1 class="text-lg text-white">Loading...</h1>
+    </div>
 
-    <div class="body-content">
-      <div class="cards">
+    <div class="px-3 py-5 bg-gray-100">
+      <div class="grid gap-2">
         <div
-          title="Click to dismiss"
-          class="card clickable"
           v-if="!read.update"
+          title="Click to dismiss"
+          class="relative p-4 text-white bg-green-600 rounded-md shadow-sm cursor-pointer group"
           @click="close('update')"
-          :style="{ backgroundColor: '#27ae60' }"
         >
-          <h1 class="title">Updated!</h1>
-          <p class="subtitle">You've upgraded to latest version! Enjoy!</p>
+          <div
+            class="absolute top-0 bottom-0 left-0 right-0 flex items-center justify-center transition bg-black bg-opacity-75 rounded-md opacity-0 pointer-events-none group-hover:opacity-100"
+          >
+            Click to dismiss
+          </div>
+
+          <div>
+            <h1 class="text-base font-medium">Updated!</h1>
+            <p class="text-sm">You've upgraded to latest version! Enjoy!</p>
+          </div>
         </div>
 
         <div
-          title="Click to dismiss"
-          class="card clickable"
           v-if="!read.projects"
-          @click="redirect('https://eggsy.xyz'); close('projects');"
-          :style="{ backgroundColor: '#16a085' }"
+          title="Click to dismiss"
+          class="relative p-4 text-white bg-green-600 rounded-md shadow-sm cursor-pointer group"
+          @click="
+            redirect('https://eggsy.xyz');
+            close('projects');
+          "
         >
-          <p class="subtitle single">
+          <div
+            class="absolute top-0 bottom-0 left-0 right-0 flex items-center justify-center transition bg-black bg-opacity-75 rounded-md opacity-0 pointer-events-none group-hover:opacity-100"
+          >
+            Click to open and dismiss
+          </div>
+
+          <p class="text-sm">
             Hey! Would you mind checking my other projects? They're also really
             cool!
           </p>
         </div>
 
-        <div class="card" :style="{ backgroundColor: 'rgb(44, 62, 80)' }">
-          <h1 class="title">Total unblocks</h1>
-          <p class="subtitle">{{ stats.unblocks }}</p>
+        <div class="p-4 text-white bg-indigo-900 rounded-md shadow-sm">
+          <h1 class="text-xl font-medium">Total unblocks</h1>
+          <span class="text-base font-light text-gray-100">{{
+            stats.unblocks
+          }}</span>
         </div>
 
-        <div class="card" :style="{ backgroundColor: 'rgb(41, 128, 185)' }">
-          <h1 class="title">Latest unblock</h1>
-          <p class="subtitle">
-            {{ stats.latestUnblock
-            ? new Date(stats.latestUnblock).toLocaleString()
-            : "Never"
+        <div class="p-4 text-white bg-indigo-900 rounded-md shadow-sm">
+          <h1 class="text-xl font-medium">Latest unblock</h1>
+          <span class="text-base font-light text-gray-100">
+            {{
+              stats.latestUnblock
+                ? new Date(stats.latestUnblock).toLocaleString()
+                : "Never"
             }}
-          </p>
+          </span>
         </div>
       </div>
     </div>
 
-    <footer class="footer">
-      <div class="control" @click="disableUnblock('imgur')">
-        <button :class="{ button: true, active: options.unblock.imgur}">Imgur</button>
-      </div>
+    <footer
+      class="grid gap-1 px-4 py-2 bg-gray-200 border-t-2 border-gray-800 border-opacity-5"
+    >
+      <button
+        :class="{
+          'relative px-4 py-2 text-center text-white transition bg-red-800 rounded-md cursor-pointer focus:outline-none hover:bg-red-900 group': true,
+          'bg-green-600 hover:bg-green-700': options.unblock.imgur,
+        }"
+        @click="disableUnblock('imgur')"
+      >
+        <div
+          class="absolute top-0 bottom-0 left-0 right-0 flex items-center justify-center transition bg-black bg-opacity-75 rounded-md opacity-0 pointer-events-none group-hover:opacity-100"
+        >
+          Click to {{ options.unblock.imgur ? "disable" : "enable" }}
+        </div>
 
-      <div class="control" @click="disableUnblock('pastebin')">
-        <button :class="{ button: true, active: options.unblock.pastebin}">Pastebin</button>
-      </div>
+        Imgur
+      </button>
+
+      <button
+        :class="{
+          'relative px-4 py-2 text-center text-white transition bg-red-800 rounded-md cursor-pointer focus:outline-none hover:bg-red-900 group': true,
+          'bg-green-600 hover:bg-green-700': options.unblock.pastebin,
+        }"
+        @click="disableUnblock('pastebin')"
+      >
+        <div
+          class="absolute top-0 bottom-0 left-0 right-0 flex items-center justify-center transition bg-black bg-opacity-75 rounded-md opacity-0 pointer-events-none group-hover:opacity-100"
+        >
+          Click to {{ options.unblock.pastebin ? "disable" : "enable" }}
+        </div>
+
+        Pastebin
+      </button>
     </footer>
   </div>
 </template>
-
-<style lang="scss">
-body {
-  padding: 0;
-  margin: 0;
-  font-family: "lexend Deca", "Segoe UI", sans-serif;
-  width: 250px;
-  max-height: 350px;
-  max-width: 250px;
-
-  .body-content {
-    padding: 0.25em 1em;
-  }
-
-  .toolbar {
-    display: block;
-    flex: 1 1 auto;
-    max-width: 100%;
-    box-shadow: 0 2px 4px -1px rgba(0, 0, 0, 0.2),
-      0 4px 5px 0 rgba(0, 0, 0, 0.14), 0 1px 10px 0 rgba(0, 0, 0, 0.12);
-
-    .title {
-      font-family: "Segoe UI", sans-serif;
-      text-transform: uppercase;
-      font-size: 1.25rem;
-      line-height: 1.5;
-      overflow: hidden;
-      text-overflow: ellipsis;
-      white-space: nowrap;
-      -webkit-user-select: none;
-      -moz-user-select: none;
-      -ms-user-select: none;
-      user-select: none;
-    }
-
-    .content,
-    .extension {
-      height: 38px;
-      align-items: center;
-      display: flex;
-      position: relative;
-      padding: 4px 16px;
-    }
-  }
-
-  .cards {
-    margin-top: 1em;
-
-    .card {
-      display: block;
-      max-width: 100%;
-      overflow-wrap: break-word;
-      position: relative;
-      white-space: normal;
-      transition: box-shadow 0.2s cubic-bezier(0.4, 0, 0.2, 1);
-      will-change: box-shadow;
-      color: #fff;
-      margin: 1em 0 1em 0;
-      border-radius: 4px;
-      box-shadow: 0 3px 1px -2px rgba(0, 0, 0, 0.2),
-        0 2px 2px 0 rgba(0, 0, 0, 0.14), 0 1px 5px 0 rgba(0, 0, 0, 0.12);
-
-      .title {
-        padding: 16px 16px 0 16px;
-        align-items: center;
-        display: flex;
-        flex-wrap: wrap;
-        font-size: 1.25rem;
-        font-weight: 500;
-        letter-spacing: 0.0125em;
-        line-height: 2rem;
-        word-break: break-all;
-        margin-bottom: 0;
-        -webkit-user-select: none;
-        -moz-user-select: none;
-        -ms-user-select: none;
-        user-select: none;
-      }
-
-      .subtitle {
-        color: hsla(0, 0%, 100%, 0.7);
-        padding: 1em;
-        font-size: 0.875rem;
-        font-weight: 400;
-        line-height: 1.375rem;
-        letter-spacing: 0.007em;
-        -webkit-user-select: none;
-        -moz-user-select: none;
-        -ms-user-select: none;
-        user-select: none;
-        margin-top: -1em;
-
-        &.single {
-          margin-top: 1em;
-        }
-      }
-
-      &:hover {
-        box-shadow: 0 5px 3px -4px rgba(0, 0, 0, 0.2),
-          0 4px 4px 0 rgba(0, 0, 0, 0.14), 0 3px 7px 0 rgba(0, 0, 0, 0.12);
-      }
-    }
-  }
-
-  .footer {
-    height: 3em;
-    background-color: #000000;
-    display: flex;
-    justify-content: space-between;
-    border-top: solid 2px #f5f5f5;
-
-    .control {
-      width: 100%;
-      color: #ffffff;
-      text-align: center;
-
-      .button {
-        height: 100%;
-        width: 100%;
-        border-radius: 0;
-        background-color: #c0392b;
-        transition: background-color 0.2s, opacity 0.2s;
-
-        &.active {
-          background-color: #27ae60;
-        }
-      }
-    }
-  }
-
-  .button {
-    align-items: center;
-    border-radius: 4px;
-    flex: 0 0 auto;
-    font-weight: 500;
-    justify-content: center;
-    outline: 0;
-    position: relative;
-    text-transform: uppercase;
-    -webkit-user-select: none;
-    -moz-user-select: none;
-    -ms-user-select: none;
-    user-select: none;
-    font-size: 0.75rem;
-    color: #fff;
-    padding: 0.25em 0.75em;
-    height: 28px;
-    min-width: 50px;
-    border: 0;
-    cursor: pointer;
-    transition: opacity 0.2s, box-shadow 0.2s;
-
-    &:hover {
-      opacity: 0.95;
-      box-shadow: 0 3px 1px -2px rgba(0, 0, 0, 0.2),
-        0 2px 2px 0 rgba(0, 0, 0, 0.14), 0 1px 5px 0 rgba(0, 0, 0, 0.12);
-    }
-
-    span {
-      align-items: center;
-      color: inherit;
-      display: flex;
-      flex: 1 0 auto;
-      justify-content: inherit;
-      line-height: normal;
-      position: relative;
-    }
-  }
-
-  .btn-black {
-    background-color: #272727;
-  }
-
-  .btn-green {
-    background-color: #27ae60;
-  }
-
-  .btn-red {
-    background-color: #c0392b;
-  }
-
-  .icon {
-    cursor: pointer;
-    transition: opacity 0.2s;
-
-    &:hover {
-      opacity: 0.75;
-    }
-  }
-
-  .block {
-    width: 100%;
-  }
-
-  .spacer {
-    flex-grow: 1 !important;
-  }
-
-  .flex {
-    display: flex;
-    justify-content: space-between;
-    height: 100%;
-  }
-
-  .clickable {
-    cursor: pointer;
-  }
-}
-</style>
 
 <script>
 import { get } from "../functions/storage";

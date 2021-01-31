@@ -1,7 +1,8 @@
 import Vue from "vue";
+import "./tailwind.scss";
 
-// @ts-ignore
-import App from "./App";
+// @ts-ignore-next-line
+import App from "./App.vue";
 
 new Vue({
   el: "#app",
