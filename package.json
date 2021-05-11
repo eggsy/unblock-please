@@ -42,7 +42,7 @@
     "fibers": "^5.0.0",
     "file-loader": "^6.2.0",
     "node-sass": "^5.0.0",
-    "postcss": "^8.2.4",
+    "postcss": "^8.2.10",
     "prettier": "^2.2.1",
     "sass": "^1.32.5",
     "sass-loader": "^10.1.1",
