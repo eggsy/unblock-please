@@ -41,7 +41,7 @@
     "eslint-plugin-vue": "^7.5.0",
     "fibers": "^5.0.0",
     "file-loader": "^6.2.0",
-    "node-sass": "^5.0.0",
+    "node-sass": "^7.0.0",
     "postcss": "^8.2.4",
     "prettier": "^2.2.1",
     "sass": "^1.32.5",
