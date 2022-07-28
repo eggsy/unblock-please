@@ -41,3 +41,11 @@ You can use issues of this repository to request a feature! It's free, trust me.
 [Chrome Web Store](https://chrome.google.com/webstore/detail/imgur-please/lpngbkmgnehdkkobdbieckjpphkohffd)
 
 If you're interested to help, check the [Contributing](https://github.com/eggsydev/imgur-please/blob/master/CONTRIBUTING.md) page!
+
+### Sponsors
+
+<p align="center">
+  <a href="https://github.com/sponsors/eggsy">
+    <img src='https://cdn.jsdelivr.net/gh/eggsy/.github/sponsors.svg'/>
+  </a>
+</p>
